@@ -7,11 +7,15 @@ class DateOrTimeWidget extends StatelessWidget {
     super.key,
     required this.hint,
     required this.icon,
-    required this.onPressed,
+     this.onPressed,
+    this.controller,
+    this.onTap,
   });
   final String hint;
   final Widget icon;
   final VoidCallback? onPressed;
+  final TextEditingController? controller;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -21,8 +25,12 @@ class DateOrTimeWidget extends StatelessWidget {
           text: hint,
         ),
         subtitle: CustomTextField(
+          borderColor: Colors.grey.withOpacity(0.4),
+          read: true,
+          onTap: onTap,
+          controller: controller,
           fill: true,
-          textColor: Colors.white,
+          textColor: Colors.black,
           maxLiens: 1,
           keyType: TextInputType.datetime,
           hint: hint,
@@ -30,7 +38,8 @@ class DateOrTimeWidget extends StatelessWidget {
             icon: icon,
             onPressed: onPressed,
             color: const Color(0xff4A3780),
-          ), obscure: false,
+          ),
+          obscure: false,
         ),
       ),
     );

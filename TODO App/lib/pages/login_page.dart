@@ -1,6 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:todo/helper/show_snack_bar.dart';
+import 'package:todo/pages/home_page.dart';
 import 'package:todo/pages/register_page.dart';
 import 'package:todo/sharedWidgets/custom_button.dart';
 import 'package:todo/sharedWidgets/custom_text_field.dart';
@@ -30,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
             child: ListView(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding:  EdgeInsets.only(top: 20.h),
                   child: Image.asset('assets/logo.png'),
                 ),
                 Row(
@@ -67,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscure: false,
                   hint: "Enter your E-mail",
                   label: SizedBox(
-                    width: 101.w,
+                    width: 103.w,
                     child: Row(
                       children: [
                         Icon(
@@ -77,9 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Text(
                           "  E-mail",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 20.sp),
                         )
                       ],
                     ),
@@ -141,11 +146,25 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 CustomButton(
                   text: "Login",
-                  ontap: () async {
+                  onTap: () async {
                     if (formKey.currentState!.validate()) {
                       setState(() {
                         isLoading = true;
                       });
+                      try {
+                        await loginUser();
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
+                          return HomePage(
+                            user: email!,
+                          );
+                        }), (route) => false);
+                      } catch (e) {
+                        showSnackBar(
+                            context,
+                            e == "A network error (such as timeout, interrupted connection or unreachable host) has occurred"
+                                ? "Network Connection Error"
+                                : "check email or password and try again");
+                      }
                       setState(() {
                         isLoading = false;
                       });
@@ -153,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   color: Colors.white,
                   textColor: const Color(0xff4A3780),
-                  width: 80.w,
+                  hPadding: 80.w,
                 ),
                 SizedBox(
                   height: 10.h,
@@ -190,5 +209,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> loginUser() async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email!, password: pass!);
   }
 }

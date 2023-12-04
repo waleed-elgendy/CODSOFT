@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:todo/helper/show_snack_bar.dart';
 import 'package:todo/pages/login_page.dart';
 import 'package:todo/sharedWidgets/custom_button.dart';
 import 'package:todo/sharedWidgets/custom_text_field.dart';
@@ -67,19 +71,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscure: false,
                   hint: "Enter your E-mail",
                   label: SizedBox(
-                    width: 101.w,
+                    width: 103.w,
                     child: Row(
                       children: [
                         Icon(
                           Icons.email_outlined,
-                          color: Colors.grey.withOpacity(0.7),
+                          color: Colors.white,
                           size: 30.dm,
                         ),
                         Text(
                           "  E-mail",
-                          style: TextStyle(
-                              color: Colors.grey.withOpacity(0.7),
-                              fontSize: 20.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 20.sp),
                         )
                       ],
                     ),
@@ -141,12 +144,23 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 CustomButton(
                   text: "Register",
-                  ontap: () async {
+                  onTap: () async {
                     if (formKey.currentState!.validate()) {
-                      setState(() {
-                        isLoading = true;
-                      });
-
+                      setState(
+                        () {
+                          isLoading = true;
+                        },
+                      );
+                      try {
+                        await registerUser();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()));
+                      } catch (e) {
+                        showSnackBar(
+                            context, e.toString());
+                      }
                       setState(() {
                         isLoading = false;
                       });
@@ -154,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                   color: Colors.white,
                   textColor: const Color(0xff4A3780),
-                  width: 80.w,
+                  hPadding: 80.w,
                 ),
                 SizedBox(
                   height: 10.h,
@@ -168,11 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ));
+                        Navigator.pop(context);
                       },
                       child: Text(
                         " Login",
@@ -191,5 +201,10 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  Future<void> registerUser() async {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email!, password: pass!);
   }
 }

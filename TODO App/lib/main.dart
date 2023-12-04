@@ -1,9 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo/cubits/view_tasks_cubit/view_tasks_cubit.dart';
+import 'package:todo/firebase_options.dart';
 import 'package:todo/pages/login_page.dart';
+import 'package:todo/simple_bloc_observer.dart';
 
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 
@@ -18,14 +27,13 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return const MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: LoginPage(),
+          return BlocProvider(
+            create: (context) => ViewTasksCubit(),
+            child: const MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: LoginPage(),
+            ),
           );
-        }
-    );
+        });
   }
-
 }
-
-

@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class IconContainer extends StatelessWidget {
   const IconContainer({
     super.key,
-    this.width,
-    this.height,
     required this.icon,
     required this.contColor,
-    required this.iconColor,
+    required this.iconColor, required this.isSelected,
   });
-  final double? width, height;
   final Color contColor, iconColor;
   final IconData icon;
+  final bool isSelected;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: contColor,
-        shape: BoxShape.circle,
+    return isSelected? CircleAvatar(
+      radius: 28.dm,
+      backgroundColor: const Color(0xffEF7B45),
+      child: CircleAvatar(
+          backgroundColor: contColor,
+         radius: 24.5.dm,
+        child: Icon(
+          icon,
+          color: iconColor,
+        ),
       ),
+    ):CircleAvatar(
+      backgroundColor: contColor,
+      radius: 26.5.dm,
       child: Icon(
         icon,
         color: iconColor,

@@ -40,6 +40,16 @@ dependencies:
   font_awesome_flutter: ^10.6.0
   flutter_holo_date_picker: ^1.1.3
   modal_progress_hud_nsn: ^0.4.0
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.0
+  cloud_firestore: ^4.13.3
+  flutter_launcher_icons: ^0.13.1
+  flutter_bloc: ^8.1.3
+
+flutter_icons:
+  android: true
+  image_path: "assets/icon.png"
+  adaptive_icon_foregroung: "assets/icon.png"
 
 dev_dependencies:
   flutter_test:
