@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
 class FirstPositioned extends StatelessWidget {
   const FirstPositioned({
     super.key,
@@ -22,17 +19,11 @@ class FirstPositioned extends StatelessWidget {
   }
 }
 
-<<<<<<< HEAD
 
 class MainColorContainer extends StatelessWidget {
   const MainColorContainer({
     super.key,
     this.height = 222,
-=======
-class MainColorContainer extends StatelessWidget {
-  const MainColorContainer({
-    super.key, this.height = 222,
->>>>>>> origin/main
   });
   final double height;
   @override
@@ -78,7 +69,3 @@ class PositionedCircle extends StatelessWidget {
     );
   }
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main

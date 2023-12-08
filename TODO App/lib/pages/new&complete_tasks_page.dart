@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,16 +12,6 @@ import 'package:todo/sharedWidgets/custom_app_bar.dart';
 import 'package:todo/sharedWidgets/custom_button.dart';
 import 'package:todo/sharedWidgets/first_two_positioned.dart';
 import 'package:todo/sharedWidgets/icon_container.dart';
-=======
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:todo/models/task_model.dart';
-import 'package:todo/pages/addTask_page.dart';
-import 'package:todo/sharedWidgets/custom_app_bar.dart';
-import 'package:todo/sharedWidgets/custom_button.dart';
-import 'package:todo/sharedWidgets/first_two_positioned.dart';
->>>>>>> origin/main
 import 'package:todo/sharedWidgets/list_container.dart';
 import 'package:todo/sharedWidgets/list_title_positioned.dart';
 
@@ -41,8 +30,8 @@ class NewAndCompleteTasksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-<<<<<<< HEAD
       appBar: CustomAppBar(
+          height: 35,
           text: DateFormat('MMMM d, y').format(DateTime.now()),
           actions: [
             GestureDetector(
@@ -65,9 +54,6 @@ class NewAndCompleteTasksPage extends StatelessWidget {
                   isSelected: false),
             ),
           ]),
-=======
-      appBar: CustomAppBar(text: DateFormat('MMMM d, y').format(DateTime.now())),
->>>>>>> origin/main
       body: Stack(
         children: [
           const FirstPositioned(),
@@ -76,11 +62,7 @@ class NewAndCompleteTasksPage extends StatelessWidget {
               right: -110.w, top: -45.h, width: 180.w, height: 180.h),
           PositionedCircle(
               left: -140.w, top: 55.h, width: 280.w, height: 300.h),
-<<<<<<< HEAD
           ListTitlePositioned(text: 'My Todo List', lrWidth: 102.w),
-=======
-          ListTitlePositioned(text: 'My Todo List', lrWidth: 104.w),
->>>>>>> origin/main
           Positioned(
             top: 158.h,
             left: 20.w,
@@ -113,11 +95,7 @@ class NewAndCompleteTasksPage extends StatelessWidget {
                   user: user,
                 ),
                 SizedBox(
-<<<<<<< HEAD
                   height: 50.h,
-=======
-                  height: 67.h,
->>>>>>> origin/main
                 ),
                 CustomButton(
                   text: "Add New Task",

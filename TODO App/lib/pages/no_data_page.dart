@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,13 +9,7 @@ import 'package:todo/pages/login_page.dart';
 import 'package:todo/sharedWidgets/custom_app_bar.dart';
 import 'package:todo/sharedWidgets/first_two_positioned.dart';
 import 'package:todo/sharedWidgets/icon_container.dart';
-=======
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:todo/sharedWidgets/custom_app_bar.dart';
-import 'package:todo/sharedWidgets/first_two_positioned.dart';
->>>>>>> origin/main
+
 class NoDataPage extends StatelessWidget {
   const NoDataPage({
     super.key,
@@ -26,31 +19,30 @@ class NoDataPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-<<<<<<< HEAD
-      appBar: CustomAppBar(text: DateFormat('MMMM d, y').format(DateTime.now()),actions: [
-        GestureDetector(
-          onTap: () async {
-            await FirebaseAuth.instance.signOut();
-            await SharedPreferences.getInstance().then((sharedPrefValue) {
-              sharedPrefValue.remove('token');
-            });
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
+      appBar: CustomAppBar(
+          height: 35,
+          text: DateFormat('MMMM d, y').format(DateTime.now()),
+          actions: [
+            GestureDetector(
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                await SharedPreferences.getInstance().then((sharedPrefValue) {
+                  sharedPrefValue.remove('token');
+                });
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
                     (route) => false);
-          },
-          child: const IconContainer(
-              icon: Icons.logout_sharp,
-              contColor: Colors.white,
-              iconColor: Color(0xff4A3780),
-              isSelected: false),
-        ),
-      ]),
-=======
-      appBar: CustomAppBar(text: DateFormat('MMMM d, y').format(DateTime.now())),
->>>>>>> origin/main
+              },
+              child: const IconContainer(
+                  icon: Icons.logout_sharp,
+                  contColor: Colors.white,
+                  iconColor: Color(0xff4A3780),
+                  isSelected: false),
+            ),
+          ]),
       body: Stack(
         children: [
           const Positioned(
