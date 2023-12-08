@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,10 +26,31 @@ class NewTasksOnlyPage extends StatelessWidget {
 
   final String user;
   final List<TaskModel> newTasks, completeTasks;
+=======
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:todo/models/task_model.dart';
+import 'package:todo/pages/addTask_page.dart';
+import 'package:todo/sharedWidgets/custom_app_bar.dart';
+import 'package:todo/sharedWidgets/custom_button.dart';
+import 'package:todo/sharedWidgets/first_two_positioned.dart';
+import 'package:todo/sharedWidgets/list_container.dart';
+import 'package:todo/sharedWidgets/list_title_positioned.dart';
+class NewTasksOnlyPage extends StatelessWidget {
+  const NewTasksOnlyPage({
+    super.key,
+    required this.user, required this.newTasks, required this.completeTasks,
+  });
+
+ final String user;
+  final List<TaskModel> newTasks,completeTasks ;
+>>>>>>> origin/main
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+<<<<<<< HEAD
       appBar: CustomAppBar(
           height: 35,
           text: DateFormat('MMMM d, y').format(DateTime.now()),
@@ -53,16 +75,26 @@ class NewTasksOnlyPage extends StatelessWidget {
                   isSelected: false),
             ),
           ]),
+=======
+      appBar: CustomAppBar(text: DateFormat('MMMM d, y').format(DateTime.now())),
+>>>>>>> origin/main
       body: Stack(
         children: [
           const FirstPositioned(),
           const MainColorContainer(),
+<<<<<<< HEAD
           //const LogOut(),
+=======
+>>>>>>> origin/main
           PositionedCircle(
               right: -110.w, top: -45.h, width: 180.w, height: 180.h),
           PositionedCircle(
               left: -140.w, top: 55.h, width: 280.w, height: 300.h),
+<<<<<<< HEAD
           ListTitlePositioned(text: 'My Todo List', lrWidth: 102.w),
+=======
+          ListTitlePositioned(text: 'My Todo List', lrWidth: 104.w),
+>>>>>>> origin/main
           Positioned(
             top: 158.h,
             left: 20.w,
@@ -70,6 +102,7 @@ class NewTasksOnlyPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+<<<<<<< HEAD
                 ListContainer(
                   height: 560.h,
                   tasks: newTasks,
@@ -77,6 +110,11 @@ class NewTasksOnlyPage extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 40.h,
+=======
+                ListContainer(height: 560.h,tasks: newTasks, user: user,),
+                SizedBox(
+                  height: 60.h,
+>>>>>>> origin/main
                 ),
                 CustomButton(
                   text: "Add New Task",
@@ -99,4 +137,8 @@ class NewTasksOnlyPage extends StatelessWidget {
       ),
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/main
