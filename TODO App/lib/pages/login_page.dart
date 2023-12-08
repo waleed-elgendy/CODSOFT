@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/helper/show_snack_bar.dart';
 import 'package:todo/pages/home_page.dart';
 import 'package:todo/pages/register_page.dart';
@@ -214,5 +215,11 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> loginUser() async {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email!, password: pass!);
-  }
+  var token =  await FirebaseAuth.instance.currentUser!.getIdToken();
+  print(token.toString());
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token.toString());
+    await prefs.setString('user', email!);
+    print(email);
+    }
 }

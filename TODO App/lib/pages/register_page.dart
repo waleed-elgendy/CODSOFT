@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:todo/helper/show_snack_bar.dart';
-import 'package:todo/pages/login_page.dart';
 import 'package:todo/sharedWidgets/custom_button.dart';
 import 'package:todo/sharedWidgets/custom_text_field.dart';
 
@@ -153,13 +152,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
                       try {
                         await registerUser();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPage()));
+                        Navigator.pop(context);
                       } catch (e) {
-                        showSnackBar(
-                            context, e.toString());
+                        showSnackBar(context, e.toString());
                       }
                       setState(() {
                         isLoading = false;

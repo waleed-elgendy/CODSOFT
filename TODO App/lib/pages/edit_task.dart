@@ -94,160 +94,168 @@ class _EditTaskState extends State<EditTask> {
                 ),
                 text: "Edit your Task",
               ),
-              body: Stack(
+              body: ListView(
+                padding: EdgeInsets.zero,
                 children: [
-                  const FirstPositioned(),
-                   MainColorContainer(height: 100.h),
-                  PositionedCircle(
-                      left: -140.w, top: -45.h, width: 280.w, height: 300.h),
-                  PositionedCircle(
-                      right: -100.w, top: -45.h, width: 180.w, height: 180.h),
-                  Positioned(
-                    top: 120.h,
-                    left: 20.w,
-                    right: 20.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(
+                    height: 843.4285714285714.h,
+                    child: Stack(
                       children: [
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: const CustomText(
-                            text: "Task Title",
-                          ),
-                          subtitle: CustomTextField(
-                            controller: taskController,
-                            borderColor: Colors.grey.withOpacity(0.4),
-                            validate: (data) {
-                              if (data!.isEmpty) {
-                                return "field is required";
-                              }
-                              return null;
-                            },
-                            hint: 'Task Title',
-                            obscure: false,
-                            fill: true,
-                            textColor: Colors.black,
-                            onchange: (data) {
-                              widget.task.taskTitle=data!;
-                              title = data;
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        EditTaskIcon(task: widget.task),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Row(
-                          children: [
-                            DateOrTimeWidget(
-                              controller: dateController,
-                              onTap: () async {
-                                var datePicked =
-                                await DatePicker.showSimpleDatePicker(
-                                  backgroundColor: Colors.white,
-                                  context,
-                                  firstDate: DateTime(DateTime.now().year),
-                                  lastDate: DateTime(2090),
-                                  dateFormat: "dd-MMMM-yyyy",
-                                  locale: DateTimePickerLocale.en_us,
-                                  looping: true,
-                                );
-                                widget.task.date =
-                                "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
-                                if (datePicked != null) {
-                                  dateController.text =
-                                  "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
-
-                                }
-                              },
-                              hint: 'Date',
-                              icon: const Icon(
-                                FontAwesomeIcons.calendar,
-                                color: Color(0xff4A3780),
+                        const FirstPositioned(),
+                         MainColorContainer(height: 100.h),
+                        PositionedCircle(
+                            left: -140.w, top: -45.h, width: 280.w, height: 300.h),
+                        PositionedCircle(
+                            right: -100.w, top: -45.h, width: 180.w, height: 180.h),
+                        Positioned(
+                          top: 120.h,
+                          left: 20.w,
+                          right: 20.w,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                title: const CustomText(
+                                  text: "Task Title",
+                                ),
+                                subtitle: CustomTextField(
+                                  controller: taskController,
+                                  borderColor: Colors.grey.withOpacity(0.4),
+                                  validate: (data) {
+                                    if (data!.isEmpty) {
+                                      return "field is required";
+                                    }
+                                    return null;
+                                  },
+                                  hint: 'Task Title',
+                                  obscure: false,
+                                  fill: true,
+                                  textColor: Colors.black,
+                                  onchange: (data) {
+                                    widget.task.taskTitle=data!;
+                                    title = data;
+                                    setState(() {});
+                                  },
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 10.w),
-                            DateOrTimeWidget(
-                              controller: timeController,
-                              onTap: () async {
-                                final TimeOfDay? newTime = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay(
-                                      hour: DateTime.now().hour,
-                                      minute: DateTime.now().minute),
-                                );
-                                widget.task.time = newTime.toString().substring(10, 15);
-                                if (newTime != null) {
-                                  timeController.text =
-                                      newTime.toString().substring(10, 15);
-                                }
-                              },
-                              hint: 'Time',
-                              icon: const Icon(
-                                Icons.access_time,
-                                color: Color(0xff4A3780),
+                              SizedBox(
+                                height: 20.h,
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: const CustomText(text: "Notes"),
-                          subtitle: CustomTextField(
-                            controller: notesController,
-                            borderColor: Colors.grey.withOpacity(0.4),
-                            obscure: false,
-                            hint: 'Notes',
-                            maxLiens: 7,
-                            fill: true,
-                            textColor: Colors.black,
-                            onchange: (data) {
-                              widget.task.notes = data;
-                              notesController.text=data!;
-                            },
+                              EditTaskIcon(task: widget.task),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              Row(
+                                children: [
+                                  DateOrTimeWidget(
+                                    controller: dateController,
+                                    onTap: () async {
+                                      var datePicked =
+                                      await DatePicker.showSimpleDatePicker(
+                                        backgroundColor: Colors.white,
+                                        context,
+                                        firstDate: DateTime(DateTime.now().year),
+                                        lastDate: DateTime(2090),
+                                        dateFormat: "dd-MMMM-yyyy",
+                                        locale: DateTimePickerLocale.en_us,
+                                        looping: true,
+                                      );
+                                      widget.task.date =
+                                      "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
+                                      if (datePicked != null) {
+                                        dateController.text =
+                                        "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
+
+                                      }
+                                    },
+                                    hint: 'Date',
+                                    icon: const Icon(
+                                      FontAwesomeIcons.calendar,
+                                      color: Color(0xff4A3780),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.w),
+                                  DateOrTimeWidget(
+                                    controller: timeController,
+                                    onTap: () async {
+                                      final TimeOfDay? newTime = await showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay(
+                                            hour: DateTime.now().hour,
+                                            minute: DateTime.now().minute),
+                                      );
+                                      widget.task.time = newTime.toString().substring(10, 15);
+                                      if (newTime != null) {
+                                        timeController.text =
+                                            newTime.toString().substring(10, 15);
+                                      }
+                                    },
+                                    hint: 'Time',
+                                    icon: const Icon(
+                                      Icons.access_time,
+                                      color: Color(0xff4A3780),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                title: const CustomText(text: "Notes"),
+                                subtitle: CustomTextField(
+                                  controller: notesController,
+                                  borderColor: Colors.grey.withOpacity(0.4),
+                                  obscure: false,
+                                  hint: 'Notes',
+                                  maxLiens: 7,
+                                  fill: true,
+                                  textColor: Colors.black,
+                                  onchange: (data) {
+                                    widget.task.notes = data;
+                                    notesController.text=data!;
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 61.h,
+                              ),
+                              title != ''
+                                  ? CustomButton(
+                                  color: const Color(0xff4A3780),
+                                  text: 'Save',
+                                  onTap: () async{
+                                    print(taskTitle);
+                                    if (formKey.currentState!.validate()) {
+                                      formKey.currentState!.save();
+                                      var task = TaskModel(
+                                          taskTitle: widget.task.taskTitle,
+                                          iconCodePoint: widget.task.iconCodePoint,
+                                          iconColor: widget.task.iconColor,
+                                          conColor: widget.task.conColor,
+                                          notes: widget.task.notes,
+                                          time: widget.task.time,
+                                          date: widget.task.date,
+                                          isComplete: widget.task.isComplete
+
+                                          );
+                                      BlocProvider.of<AddTaskCubit>(context)
+                                          .addTask(task, widget.task.taskTitle==taskTitle?taskTitle:widget.task.taskTitle, widget.user);
+                                      if(widget.task.taskTitle!=taskTitle){
+                                        await deleteTasks
+                                            .doc(taskTitle)
+                                            .delete();
+                                      }
+                                    } else {
+                                      autoValidateMode = AutovalidateMode.always;
+                                    }
+                                  })
+                                  : const SizedBox(),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 50.h,
-                        ),
-                        title != ''
-                            ? CustomButton(
-                            color: const Color(0xff4A3780),
-                            text: 'Save',
-                            onTap: () async{
-                              print(taskTitle);
-                              if (formKey.currentState!.validate()) {
-                                formKey.currentState!.save();
-                                var task = TaskModel(
-                                    taskTitle: widget.task.taskTitle,
-                                    iconCodePoint: widget.task.iconCodePoint,
-                                    iconColor: widget.task.iconColor,
-                                    conColor: widget.task.conColor,
-                                    notes: widget.task.notes,
-                                    time: widget.task.time,
-                                    date: widget.task.date,
-                                    isComplete: widget.task.isComplete
-
-                                    );
-                                BlocProvider.of<AddTaskCubit>(context)
-                                    .addTask(task, widget.task.taskTitle==taskTitle?taskTitle:widget.task.taskTitle, widget.user);
-                                if(widget.task.taskTitle!=taskTitle){
-                                  await deleteTasks
-                                      .doc(taskTitle)
-                                      .delete();
-                                }
-                              } else {
-                                autoValidateMode = AutovalidateMode.always;
-                              }
-                            })
-                            : const SizedBox(),
                       ],
                     ),
                   ),
