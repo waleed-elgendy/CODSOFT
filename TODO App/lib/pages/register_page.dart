@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -153,8 +154,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       try {
                         await registerUser();
                         Navigator.pop(context);
+                        showSnackBar(context, "Registration Success you can Login Now","success",ContentType.success);
                       } catch (e) {
-                        showSnackBar(context, e.toString());
+                        if(e.toString().length==92){
+                        showSnackBar(context, e.toString().substring(36),"Registration failed",ContentType.failure);}
+                        else{
+                          showSnackBar(context, e.toString().substring(30),"Registration failed",ContentType.failure);
+                        }
                       }
                       setState(() {
                         isLoading = false;

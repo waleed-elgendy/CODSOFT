@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +66,7 @@ class _EditTaskState extends State<EditTask> {
         }
         if (state is AddTaskFailure) {
           isLoading = false;
-          showSnackBar(context, 'try again');
+          showSnackBar(context, 'try again',"Edit failed",ContentType.failure);
         }
         if (state is AddTaskSuccess) {
           isLoading = false;
