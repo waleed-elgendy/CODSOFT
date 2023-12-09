@@ -154,12 +154,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       try {
                         await registerUser();
                         Navigator.pop(context);
-                        showSnackBar(context, "Registration Success you can Login Now","success",ContentType.success);
+                        showSnackBar(
+                            context,
+                            "Registration Success you can Login Now",
+                            "success",
+                            ContentType.success);
                       } catch (e) {
-                        if(e.toString().length==92){
-                        showSnackBar(context, e.toString().substring(36),"Registration failed",ContentType.failure);}
-                        else{
-                          showSnackBar(context, e.toString().substring(30),"Registration failed",ContentType.failure);
+                        if (e.toString().length == 92) {
+                          showSnackBar(context, e.toString().substring(36),
+                              "Registration failed", ContentType.failure);
+                        } else {
+                          showSnackBar(context, e.toString().substring(30),
+                              "Registration failed", ContentType.failure);
                         }
                       }
                       setState(() {

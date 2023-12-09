@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,6 +63,8 @@ class _TasksListViewState extends State<TasksListView> {
                 title: Opacity(
                   opacity: widget.tasks[index].isComplete ? 0.65 : 1,
                   child: Text(
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     widget.tasks[index].taskTitle,
                     style: TextStyle(
                       fontSize: 18.sp,
