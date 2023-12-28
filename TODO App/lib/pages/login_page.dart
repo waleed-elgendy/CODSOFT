@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             child: ListView(
               children: [
                 Padding(
-                  padding:  EdgeInsets.only(top: 20.h),
+                  padding: EdgeInsets.only(top: 20.h),
                   child: Image.asset('assets/logo.png'),
                 ),
                 Row(
@@ -155,7 +154,8 @@ class _LoginPageState extends State<LoginPage> {
                       });
                       try {
                         await loginUser();
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (context) {
                           return HomePage(
                             user: email!,
                           );
@@ -163,7 +163,9 @@ class _LoginPageState extends State<LoginPage> {
                       } catch (e) {
                         showSnackBar(
                             context,
-                           "check email or password and try again","Login failed",ContentType.failure);
+                            "check email or password and try again",
+                            "Login failed",
+                            ContentType.failure);
                       }
                       setState(() {
                         isLoading = false;
@@ -214,11 +216,9 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> loginUser() async {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email!, password: pass!);
-  var token =  await FirebaseAuth.instance.currentUser!.getIdToken();
-  print(token.toString());
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token.toString());
     await prefs.setString('user', email!);
-    print(email);
-    }
+  }
 }
