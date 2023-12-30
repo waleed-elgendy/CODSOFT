@@ -62,6 +62,7 @@ class HomePage extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => RecipeDetailsPage(
                                   index: index ,
+                                  pop: true,
                                 )));
                       },
                       child: Padding(
@@ -142,7 +143,7 @@ class HomePage extends StatelessWidget {
                     )),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: GridView.builder(
                   shrinkWrap : true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -163,6 +164,7 @@ class HomePage extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => RecipeDetailsPage(
                               index: index,
+                              pop: false,
                             ),
                           ),
                         );

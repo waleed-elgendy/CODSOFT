@@ -3,8 +3,9 @@ import 'package:recips_app/helper/recips_list.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RecipeDetailsPage extends StatelessWidget {
-  const RecipeDetailsPage({Key? key, required this.index}) : super(key: key);
+  const RecipeDetailsPage({Key? key, required this.index, required this.pop}) : super(key: key);
   final int index;
+  final bool pop;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,16 +30,19 @@ class RecipeDetailsPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text(recipes[index].title,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 38)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(pop?popular[index].title:recipes[index].title,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 38)),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Container(
                 padding: const EdgeInsets.only(left: 5),
-                child: Text(recipes[index].description,
+                child: Text(pop?popular[index].description:recipes[index].description,
                     style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -80,7 +84,7 @@ class RecipeDetailsPage extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text(recipes[index].calories.toString(),
+                                    Text(pop?popular[index].calories.toString():recipes[index].calories.toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -113,7 +117,7 @@ class RecipeDetailsPage extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                        recipes[index].carb.toString(),
+                                        pop?popular[index].carb.toString():recipes[index].carb.toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -146,7 +150,7 @@ class RecipeDetailsPage extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                        recipes[index].protein.toString(),
+                                       pop? popular[index].protein.toString(): recipes[index].protein.toString(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -168,7 +172,7 @@ class RecipeDetailsPage extends StatelessWidget {
                    SizedBox(
                     height: 260,
                     width: 210,
-                    child: Image.asset(recipes[index].image)
+                    child: Image.asset(pop?popular[index].image:recipes[index].image)
                   ),
                 ],
               ),
@@ -187,7 +191,7 @@ class RecipeDetailsPage extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-              child: Text(recipes[index].ingredient,
+              child: Text(pop?popular[index].ingredient:recipes[index].ingredient,
                   style: TextStyle(
                       color: Colors.grey.shade600,
                       fontWeight: FontWeight.bold,
@@ -200,7 +204,7 @@ class RecipeDetailsPage extends StatelessWidget {
                 elevation: 20,
                 onPressed: () async {
                    final Uri url =
-                      Uri.parse(recipes[index].url);
+                      Uri.parse(pop?popular[index].url:recipes[index].url);
                   if (await launchUrl(url)) {
                     throw Exception('Could not launch $url');
                   }
@@ -220,7 +224,7 @@ class RecipeDetailsPage extends StatelessWidget {
                     fontSize: 31)),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(recipes[index].preparation,
+              child: Text(pop?popular[index].preparation:recipes[index].preparation,
                   style: TextStyle(
                       color: Colors.grey.shade600,
                       fontWeight: FontWeight.bold,
