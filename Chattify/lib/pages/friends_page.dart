@@ -11,7 +11,7 @@ class FriendsPage extends StatelessWidget {
   final String email;
 
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
     CollectionReference friends =
         FirebaseFirestore.instance.collection('users/$email/friends');
     return StreamBuilder(
@@ -26,7 +26,7 @@ class FriendsPage extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.only(top: 50.h),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: 15.w),
@@ -42,14 +42,25 @@ class FriendsPage extends StatelessWidget {
                   ),
                   SizedBox(height: 20.h),
 
-                  SizedBox(
-                      height: 320.h, child: Image.asset("assets/friends.png")),
-                  Text(
-                    "   your friends list is empty\n          add friends now",
-                    style: TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22.sp),
+                  Center(
+                    child: SizedBox(
+                        height: 320.h, child: Image.asset("assets/friends.png")),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return AllUsers(email: email);
+                        },));
+                      },
+                      child: Text(
+                        "   your friends list is empty\n          add friends now",
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22.sp),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -115,4 +126,5 @@ class FriendsPage extends StatelessWidget {
       },
     );
   }
+
 }
