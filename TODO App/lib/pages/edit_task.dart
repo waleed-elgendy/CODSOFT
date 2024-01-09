@@ -236,7 +236,7 @@ class _EditTaskState extends State<EditTask> {
                                 ),
                               ),
                               SizedBox(
-                                height: 38.h,
+                                height: 61.h,
                               ),
                               title != ''
                                   ? CustomButton(
