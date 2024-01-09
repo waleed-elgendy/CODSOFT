@@ -105,7 +105,7 @@ class _EditTaskState extends State<EditTask> {
                 padding: EdgeInsets.zero,
                 children: [
                   SizedBox(
-                    height: 843.4285714285714.h,
+                    height: MediaQuery.of(context).size.height,
                     child: Stack(
                       children: [
                         const FirstPositioned(),
