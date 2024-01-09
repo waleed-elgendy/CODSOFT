@@ -11,6 +11,8 @@ import 'package:todo/pages/home_page.dart';
 import 'package:todo/pages/register_page.dart';
 import 'package:todo/sharedWidgets/custom_button.dart';
 import 'package:todo/sharedWidgets/custom_text_field.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -220,5 +222,12 @@ class _LoginPageState extends State<LoginPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token.toString());
     await prefs.setString('user', email!);
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      // You can request multiple permissions at once.
+      await [
+        Permission.notification,
+      ].request();
+    }
   }
 }
