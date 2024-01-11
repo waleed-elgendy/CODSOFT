@@ -49,6 +49,7 @@ dependencies:
   awesome_snackbar_content: ^0.0.5
   firebase_messaging: ^14.7.10
   permission_handler: ^6.1.1
+  flutter_local_notifications: ^16.3.0
 
 flutter_icons:
   android: true
