@@ -10,6 +10,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:todo/cubits/add_task_cubit/add_task_cubit.dart';
 import 'package:todo/helper/show_snack_bar.dart';
 import 'package:todo/models/task_model.dart';
+import 'package:todo/notification_services.dart';
 import 'package:todo/sharedWidgets/category_list.dart';
 import 'package:todo/sharedWidgets/custom_app_bar.dart';
 import 'package:todo/sharedWidgets/custom_button.dart';
@@ -18,6 +19,7 @@ import 'package:todo/sharedWidgets/custom_text_field.dart';
 import 'package:todo/sharedWidgets/dateTime_widget.dart';
 import 'package:todo/sharedWidgets/first_two_positioned.dart';
 import 'package:todo/sharedWidgets/icon_container.dart';
+
 
 class AddTask extends StatefulWidget {
   AddTask({Key? key, required this.user}) : super(key: key);
@@ -37,6 +39,9 @@ class _AddTaskState extends State<AddTask> {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
 
+  DateTime? scheduleTime;
+  DateTime? schedulePackedDate;
+  TimeOfDay? schedulePackedTime;
   GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
@@ -53,11 +58,21 @@ class _AddTaskState extends State<AddTask> {
         }
         if (state is AddTaskFailure) {
           isLoading = false;
-          showSnackBar(context, 'try again',"Add failed",ContentType.failure);
+          showSnackBar(context, 'try again', "Add failed", ContentType.failure);
         }
         if (state is AddTaskSuccess) {
-          isLoading = false;
-          setState(() {});
+          setState(() {
+            isLoading = false;
+          });
+          if (schedulePackedDate != null && schedulePackedTime != null) {
+            String c =
+                "${schedulePackedDate.toString().substring(0, 11)}${schedulePackedTime.toString().substring(10, 15)}:00.000";
+            scheduleTime = DateTime.parse(c);
+            NotificationServices().scheduleNotification(
+                title: "$title",
+                body: "your task time is now",
+                time: scheduleTime!);
+          }
           Navigator.pop(context);
         }
       }, builder: (context, state) {
@@ -67,10 +82,10 @@ class _AddTaskState extends State<AddTask> {
             key: formKey,
             child: Scaffold(
               extendBodyBehindAppBar: true,
-              appBar:CustomAppBar(
+              appBar: CustomAppBar(
                 height: 40.h,
                 leading: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pop(context);
                   },
                   child: const IconContainer(
@@ -92,14 +107,20 @@ class _AddTaskState extends State<AddTask> {
                         const FirstPositioned(),
                         MainColorContainer(height: 100.h),
                         PositionedCircle(
-                            left: -140.w, top: -45.h, width: 280.w, height: 300.h),
+                            left: -140.w,
+                            top: -45.h,
+                            width: 280.w,
+                            height: 300.h),
                         PositionedCircle(
-                            right: -100.w, top: -45.h, width: 180.w, height: 180.h),
+                            right: -100.w,
+                            top: -45.h,
+                            width: 180.w,
+                            height: 180.h),
                         Positioned(
                           top: 120.h,
                           left: 20.w,
                           right: 20.w,
-                          child:Column(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ListTile(
@@ -139,20 +160,22 @@ class _AddTaskState extends State<AddTask> {
                                     controller: dateController,
                                     onTap: () async {
                                       var datePicked =
-                                      await DatePicker.showSimpleDatePicker(
+                                          await DatePicker.showSimpleDatePicker(
                                         backgroundColor: Colors.white,
                                         context,
-                                        firstDate: DateTime(DateTime.now().year),
+                                        firstDate:
+                                            DateTime(DateTime.now().year),
                                         lastDate: DateTime(2090),
                                         dateFormat: "dd-MMMM-yyyy",
                                         locale: DateTimePickerLocale.en_us,
                                         looping: true,
                                       );
+                                      schedulePackedDate = datePicked;
                                       date =
-                                      "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
+                                          "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
                                       if (datePicked != null) {
                                         dateController.text =
-                                        "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
+                                            "${datePicked.toString().substring(8, 10)}-${datePicked.toString().substring(5, 7)}";
                                       }
                                     },
                                     hint: 'Date',
@@ -165,16 +188,20 @@ class _AddTaskState extends State<AddTask> {
                                   DateOrTimeWidget(
                                     controller: timeController,
                                     onTap: () async {
-                                      final TimeOfDay? newTime = await showTimePicker(
+                                      final TimeOfDay? newTime =
+                                          await showTimePicker(
                                         context: context,
                                         initialTime: TimeOfDay(
                                             hour: DateTime.now().hour,
                                             minute: DateTime.now().minute),
                                       );
-                                      time = newTime.toString().substring(10, 15);
+                                      schedulePackedTime = newTime;
+                                      time =
+                                          newTime.toString().substring(10, 15);
                                       if (newTime != null) {
-                                        timeController.text =
-                                            newTime.toString().substring(10, 15);
+                                        timeController.text = newTime
+                                            .toString()
+                                            .substring(10, 15);
                                       }
                                     },
                                     hint: 'Time',
@@ -208,26 +235,28 @@ class _AddTaskState extends State<AddTask> {
                               ),
                               title != ''
                                   ? CustomButton(
-                                  color: const Color(0xff4A3780),
-                                  text: 'Add',
-                                  onTap: () {
-                                    if (formKey.currentState!.validate()) {
-                                      formKey.currentState!.save();
-                                      var task = TaskModel(
-                                          taskTitle: taskTitle!,
-                                          iconCodePoint: 0xe385,
-                                          iconColor: 0xff194A66,
-                                          conColor: 0xffDBECF6,
-                                          notes: notes,
-                                          time: time,
-                                          date: date,
-                                          isComplete: isComplete);
-                                      BlocProvider.of<AddTaskCubit>(context)
-                                          .addTask(task, taskTitle!, widget.user);
-                                    } else {
-                                      autoValidateMode = AutovalidateMode.always;
-                                    }
-                                  })
+                                      color: const Color(0xff4A3780),
+                                      text: 'Add',
+                                      onTap: () {
+                                        if (formKey.currentState!.validate()) {
+                                          formKey.currentState!.save();
+                                          var task = TaskModel(
+                                              taskTitle: taskTitle!,
+                                              iconCodePoint: 0xe385,
+                                              iconColor: 0xff194A66,
+                                              conColor: 0xffDBECF6,
+                                              notes: notes,
+                                              time: time,
+                                              date: date,
+                                              isComplete: isComplete);
+                                          BlocProvider.of<AddTaskCubit>(context)
+                                              .addTask(task, taskTitle!,
+                                                  widget.user);
+                                        } else {
+                                          autoValidateMode =
+                                              AutovalidateMode.always;
+                                        }
+                                      })
                                   : const SizedBox(),
                             ],
                           ),

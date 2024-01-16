@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/helper/auth_widget.dart';
 import 'package:todo/notification_services.dart';
@@ -10,14 +11,21 @@ import 'package:todo/simple_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.Debug.setAlertLevel(OSLogLevel.none);
+  OneSignal.initialize("41876a51-ddb1-42fd-bc91-c3083e8a4822");
+  OneSignal.Notifications.requestPermission(true);
+   NotificationServices().initLocalNotification();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  print(await FirebaseMessaging.instance.getToken());
   NotificationServices().firebaseInit();
  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
+
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
