@@ -19,7 +19,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print(await FirebaseMessaging.instance.getToken());
   NotificationServices().firebaseInit();
  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   Bloc.observer = SimpleBlocObserver();
